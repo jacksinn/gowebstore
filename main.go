@@ -24,6 +24,10 @@ func main() {
 			context = viewmodels.GetHome()
 		case "categories":
 			context = viewmodels.GetCategories()
+		case "products":
+			context = viewmodels.GetProducts()
+		case "product":
+			context = viewmodels.GetProduct()
 		}
 
 
