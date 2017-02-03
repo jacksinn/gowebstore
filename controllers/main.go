@@ -6,37 +6,29 @@ import (
 	"os"
 	"bufio"
 	"strings"
-	"github.com/jacksinn/gowebstore/viewmodels"
+	//"github.com/jacksinn/gowebstore/viewmodels"
+	"github.com/gorilla/mux"
 )
 
 func Register(templates *template.Template) {
-	http.HandleFunc("/",
-		func(w http.ResponseWriter, req *http.Request){
-			requestedFile := req.URL.Path[1:] //remove first slash character
-			template := templates.Lookup(requestedFile + ".html")
+	router := mux.NewRouter()
 
-			var context interface{} = nil
+	//Home Page
+	hc := new(homeController)
+	hc.template = templates.Lookup("home.html")
+	router.HandleFunc("/home", hc.get)
 
-			switch requestedFile {
-			case "home":
-				context = viewmodels.GetHome()
-			case "categories":
-				context = viewmodels.GetCategories()
-			case "products":
-				context = viewmodels.GetProducts()
-			case "product":
-				context = viewmodels.GetProduct()
-			}
+	//Categories Page
+	cc := new(categoriesController)
+	cc.template = templates.Lookup("categories.html")
+	router.HandleFunc("/categories", cc.get)
 
+	categoryController := new(categoryController)
+	categoryController.template = templates.Lookup("products.html")
+	router.HandleFunc("/categories/{id}", categoryController.get)
 
-
-			if template != nil {
-				template.Execute(w, context)
-			} else {
-				w.WriteHeader(404)
-			}
-		})
-
+	http.Handle("/", router)
+	//Handling Images and CSS
 	http.HandleFunc("/img/", serveResource)
 	http.HandleFunc("/css/", serveResource)
 

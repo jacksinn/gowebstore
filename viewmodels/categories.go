@@ -15,6 +15,7 @@ type Category struct {
 	Title string
 	Description string
 	IsOrientRight bool
+	Id int
 }
 func GetCategories() Categories {
 	result := Categories {
@@ -31,6 +32,7 @@ organic juices that are guaranteed to be obtained from trees that
 have never been treated with pesticides or artificial
 fertilizers.`,
 		IsOrientRight: false,
+		Id: 1,
 	}
 
 	supplyCategory := Category{
@@ -40,6 +42,8 @@ fertilizers.`,
 napkins, LSS is your source for the sundries that keep your stand
 running smoothly.`,
 		IsOrientRight: true,
+		Id: 2,
+
 	}
 
 	advertiseCategory := Category{
@@ -49,6 +53,8 @@ running smoothly.`,
 along the side of the road, but if you want to take it to the next
 level, our premium line of advertising supplies.`,
 		IsOrientRight: false,
+		Id: 3,
+
 	}
 
 	result.Categories = []Category{
