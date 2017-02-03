@@ -33,6 +33,7 @@ func serveResource(w http.ResponseWriter, r *http.Request) {
 	path := "public" + r.URL.Path
 
 	var contentType string
+
 	if strings.HasSuffix(path, ".css"){
 		contentType = "text/css"
 	} else if strings.HasSuffix(path, ".png"){
@@ -45,7 +46,7 @@ func serveResource(w http.ResponseWriter, r *http.Request) {
 
 	if err == nil {
 		defer f.Close()
-		w.Header().Add("Content Type", contentType)
+		w.Header().Add("Content-Type", contentType)
 
 		br := bufio.NewReader(f)
 		br.WriteTo(w)
