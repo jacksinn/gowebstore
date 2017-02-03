@@ -26,27 +26,32 @@ func GetProducts(id int) Products {
 	result.Title = "Lemonade Stand Society - " + shopName + " Shop"
 
 	if id == 1 {
-		lemonJuice := MakeLemonJuiceProduct()
-		appleJuice := MakeAppleJuiceProduct()
-		watermelonJuice := MakeWatermelonJuiceProduct()
-		kiwiJuice := MakeKiwiJuiceProduct()
-		mangosteenJuice := MakeMangosteenJuiceProduct()
-		orangeJuice := MakeOrangeJuiceProduct()
-		pineappleJuice := MakePineappleJuiceProduct()
-		strawberryJuice := MakeStrawberryJuiceProduct()
-
-		result.Products = []Product{
-			lemonJuice,
-			appleJuice,
-			watermelonJuice,
-			kiwiJuice,
-			mangosteenJuice,
-			orangeJuice,
-			pineappleJuice,
-			strawberryJuice,
-		}
+		result.Products = getProductList()
 	}
 
+	return result
+}
+
+func getProductList() []Product {
+	lemonJuice := MakeLemonJuiceProduct()
+	appleJuice := MakeAppleJuiceProduct()
+	watermelonJuice := MakeWatermelonJuiceProduct()
+	kiwiJuice := MakeKiwiJuiceProduct()
+	mangosteenJuice := MakeMangosteenJuiceProduct()
+	orangeJuice := MakeOrangeJuiceProduct()
+	pineappleJuice := MakePineappleJuiceProduct()
+	strawberryJuice := MakeStrawberryJuiceProduct()
+
+	result := []Product{
+		lemonJuice,
+		appleJuice,
+		watermelonJuice,
+		kiwiJuice,
+		mangosteenJuice,
+		orangeJuice,
+		pineappleJuice,
+		strawberryJuice,
+	}
 	return result
 }
 
@@ -56,13 +61,22 @@ type ProductVM struct {
 	Product Product
 }
 
-func GetProduct() ProductVM {
+func GetProduct(id int) ProductVM {
 	var result ProductVM
 
-	result.Active = "shop"
-	result.Title = "Lemonade Stand Society - Lemon Juice"
+	productList := getProductList()
+	var product Product
 
-	result.Product = MakeLemonJuiceProduct()
+	for _, p := range productList {
+		if p.Id == id {
+			product = p
+			break
+		}
+	}
+	result.Active = "shop"
+	result.Title = "Lemonade Stand Society - " + product.Name
+
+	result.Product = product
 
 	return result
 }

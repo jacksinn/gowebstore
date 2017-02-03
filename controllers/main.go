@@ -27,6 +27,10 @@ func Register(templates *template.Template) {
 	categoryController.template = templates.Lookup("products.html")
 	router.HandleFunc("/categories/{id}", categoryController.get)
 
+	productController := new(productController)
+	productController.template = templates.Lookup("product.html")
+	router.HandleFunc("/product/{id}", productController.get)
+
 	http.Handle("/", router)
 	//Handling Images and CSS
 	http.HandleFunc("/img/", serveResource)
